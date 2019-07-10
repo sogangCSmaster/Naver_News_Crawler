@@ -1,6 +1,8 @@
 # Naver_News_Crawler
 파이썬 네이버 뉴스 크롤러
 
+문의사항은 cs20131575@u.sogang.ac.kr 로 메일 보내주세요.
+
 <hr />
 
 ## Todo
