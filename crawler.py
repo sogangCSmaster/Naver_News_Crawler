@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-
+import urllib.parse as urlparse
+import json
 
 def crawl_url(sid2, date, page):
     data = []
@@ -31,6 +32,12 @@ def crawl_news(url):
     status = req.status_code
     if status!= 200:
         return print("Error, status code :", status)
+
+
+    parsed = urlparse.urlparse(url)
+    oid = urlparse.parse_qs(parsed.query)['oid'][0]
+    aid = urlparse.parse_qs(parsed.query)['aid'][0]
+
     html = req.text
     soup = BeautifulSoup(html, 'html.parser')
     
@@ -47,21 +54,35 @@ def crawl_news(url):
     publishedAt = soup.find('span', {'class': 't11'})
     publishedAt = publishedAt.text
 
-    # goodTag = soup.find('li', {'class': 'u_likeit_list good'})
-    # good = int(goodTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
-    # warmTag = soup.find('li', {'class': 'u_likeit_list warm'})
-    # warm = int(warmTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
-    # sadTag = soup.find('li', {'class': 'u_likeit_list sad'})
-    # sad = int(sadTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
-    # angryTag = soup.find('li', {'class': 'u_likeit_list angry'})
-    # angry = int(angryTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
-    # wantTag = soup.find('li', {'class': 'u_likeit_list want'})
-    # want = int(wantTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
+    sentimentAPI = "https://news.like.naver.com/v1/search/contents?q=NEWS[ne_{}_{}]".format(oid, aid)
+    print('sentimentAPI:', sentimentAPI)
+    summaryAPI = "https://tts.news.naver.com/article/{}/{}/summary".format(oid, aid)
+    print('summaryAPI:', summaryAPI)
 
-    # print(good)
-    # print(warm)
-    # print(sad)
+    sentimentJson = requests.get(sentimentAPI).json()
+    summaryJson = requests.get(summaryAPI).json()
 
+    like = 0
+    warm = 0
+    sad = 0
+    angry = 0
+    want = 0
+    reactions = sentimentJson['contents'][0]['reactions']
+    for reaction in reactions:
+        if reaction['reactionType']=='like':
+            like = reaction['count']
+        elif reaction['reactionType']=='warm':
+            warm = reaction['count']
+        elif reaction['reactionType']=='sad':
+            sad = reaction['count']
+        elif reaction['reactionType']=='angry':
+            angry = reaction['count']
+        elif reaction['reactionType']=='want':
+            want = reaction['count']
+
+    summary = summaryJson['summary']
+    summary = summary.replace('<br/>', '\n')
+    
 
     content = soup.find('div', id='articleBodyContents')
 
@@ -72,11 +93,16 @@ def crawl_news(url):
         aTag.decompose()
     
     content = content.text.strip()
-    
+
     data['title'] = title
     data['content'] = content
     data['thumbnail'] = thumbnail
     data['publishedAt'] = publishedAt
-
+    data['summary'] = summary
+    data['like'] = like
+    data['warm'] = warm
+    data['sad'] = sad
+    data['angry'] = angry
+    data['want'] = want
 
     return data
