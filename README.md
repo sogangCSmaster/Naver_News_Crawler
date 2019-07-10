@@ -17,13 +17,14 @@
 
 ## 네이버 뉴스 URL 분석
 
-예시 : https://news.naver.com/main/list.nhn?mode=LS2D&mid=shm&sid2=310&sid1=101&date=20190707
+예시 : https://news.naver.com/main/list.nhn?mode=LS2D&mid=shm&sid2=310&sid1=101&date=20190707&page=2
 
 1. mode : LSD와 LS2D가 있는데, LS2D로 해야 날짜기반 검색이 가능
 2. sid1 : 대분류 카테고리 (정치, 경제, 사회, 생활/문화, 세계, IT/과학)
 3. sid2 : 소분류 카테고리
 4. date : 발행날짜 (포맷 : YYYYMMDD)
 5. mid : shm, pho 두개가 있는데 shm는 신문, pho는 포토인것 같음 pho일경우 포토뉴스
+6. page : pagination
 
 
 ## 카테고리 대분류 코드 (sid1)
