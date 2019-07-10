@@ -26,6 +26,8 @@
 5. mid : shm, pho 두개가 있는데 shm는 신문, pho는 포토인것 같음 pho일경우 포토뉴스
 6. page : pagination
 
+sid2가 실질적인 뉴스가 나오는 query
+
 
 ## 카테고리 대분류 코드 (sid1)
 
