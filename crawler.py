@@ -11,7 +11,6 @@ def crawl_url(sid2, date, page):
     if status!= 200:
         return print("Error, status code :", status)
 
-    print("url fetched!")
     html = req.text
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -24,7 +23,6 @@ def crawl_url(sid2, date, page):
         press = press.text
         data.append({'press': press, 'url': url})
     
-    print("returned url datas!")
     return data
 
 def crawl_news(url):
@@ -33,8 +31,6 @@ def crawl_news(url):
     status = req.status_code
     if status!= 200:
         return print("Error, status code :", status)
-
-    print("url fetched!")
     html = req.text
     soup = BeautifulSoup(html, 'html.parser')
     
@@ -44,10 +40,29 @@ def crawl_news(url):
     
     thumbnail = soup.find('meta', property='og:image')
     thumbnail = thumbnail['content']
+
     title = soup.find('meta', property='og:title')
     title = title['content']
+
     publishedAt = soup.find('span', {'class': 't11'})
     publishedAt = publishedAt.text
+
+    # goodTag = soup.find('li', {'class': 'u_likeit_list good'})
+    # good = int(goodTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
+    # warmTag = soup.find('li', {'class': 'u_likeit_list warm'})
+    # warm = int(warmTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
+    # sadTag = soup.find('li', {'class': 'u_likeit_list sad'})
+    # sad = int(sadTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
+    # angryTag = soup.find('li', {'class': 'u_likeit_list angry'})
+    # angry = int(angryTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
+    # wantTag = soup.find('li', {'class': 'u_likeit_list want'})
+    # want = int(wantTag.find('span', {'class': 'u_likeit_list_count _count'}).text)
+
+    # print(good)
+    # print(warm)
+    # print(sad)
+
+
     content = soup.find('div', id='articleBodyContents')
 
 
@@ -57,6 +72,7 @@ def crawl_news(url):
         aTag.decompose()
     
     content = content.text.strip()
+    
     data['title'] = title
     data['content'] = content
     data['thumbnail'] = thumbnail
