@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-# 카테고리 리스트 출력
 def crawl_url(sid2, date, page):
     data = []
     url = "https://news.naver.com/main/list.nhn?mode=LS2D&mid=shm&sid2=" + str(sid2) + "&date=" + str(date) + "&page=" + str(page)
