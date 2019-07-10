@@ -100,3 +100,23 @@ sid2가 실질적인 뉴스가 나오는 query
 - 283 : 컴퓨터
 - 229 : 게임/리뷰
 - 228 : 과학 일반
+
+
+
+## 감성 추출 API
+
+- 뉴스링크 : https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=101&oid=025&aid=0002921348
+
+```
+https://news.like.naver.com/v1/search/contents?q=NEWS[ne_025_0002921348]
+
+ne_025_0002921366
+ne_[oid]_[aid]
+```
+
+## 요약문 API
+- 뉴스링크 : https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=101&oid=025&aid=0002921348
+```
+https://tts.news.naver.com/article/025/0002921348/summary
+https://tts.news.naver.com/article/[oid]/[aid]/summary
+```
