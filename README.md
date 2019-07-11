@@ -164,3 +164,13 @@ ne_[oid]_[aid]
 https://tts.news.naver.com/article/025/0002921348/summary
 https://tts.news.naver.com/article/[oid]/[aid]/summary
 ```
+
+
+
+
+## 성별, 나이
+네이버에서 댓글 100개 이상은 성별과 나이를 제공함.
+네이버에서 쓰는 댓글 API를 확인한 결과 호출이 안됨...
+100개 이상의 댓글에 대해서는 크로미움을 써야 할것으로 보임
+
+- API : https://apis.naver.com/commentBox/cbox/web_neo_list_jsonp.json?sticket=news&templateId=default_politics&pool=cbox5&_callback=jQuery112409646478520046817_1562804201790&lang=ko&country=KR&objectId=news047%2C0002233024&categoryId=&pageSize=20&indexSize=10&groupId=&listType=OBJECT&pageType=more&page=1&initialize=true&userType=&useAltSort=true&replyPageSize=20&moveTo=&sort=new&includeAllStatus=true&_=1562804201791
