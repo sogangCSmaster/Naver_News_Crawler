@@ -41,7 +41,7 @@ def crawl_news(url):
     html = req.text
     soup = BeautifulSoup(html, 'html.parser')
     
-    for useless in soup(['script', 'style']):
+    for useless in soup(['script', 'style', 'a']):
         useless.extract()
 
     
@@ -50,17 +50,16 @@ def crawl_news(url):
 
     title = soup.find('meta', property='og:title')
     title = title['content']
+    title = title.strip()
 
     publishedAt = soup.find('span', {'class': 't11'})
     publishedAt = publishedAt.text
 
     sentimentAPI = "https://news.like.naver.com/v1/search/contents?q=NEWS[ne_{}_{}]".format(oid, aid)
-    print('sentimentAPI:', sentimentAPI)
     summaryAPI = "https://tts.news.naver.com/article/{}/{}/summary".format(oid, aid)
-    print('summaryAPI:', summaryAPI)
 
     sentimentJson = requests.get(sentimentAPI).json()
-    summaryJson = requests.get(summaryAPI).json()
+    #summaryJson = requests.get(summaryAPI).json()
 
     like = 0
     warm = 0
@@ -80,8 +79,8 @@ def crawl_news(url):
         elif reaction['reactionType']=='want':
             want = reaction['count']
 
-    summary = summaryJson['summary']
-    summary = summary.replace('<br/>', '\n')
+    #summary = summaryJson['summary']
+    #summary = summary.replace('<br/>', '\n')
     
 
     content = soup.find('div', id='articleBodyContents')
@@ -98,7 +97,7 @@ def crawl_news(url):
     data['content'] = content
     data['thumbnail'] = thumbnail
     data['publishedAt'] = publishedAt
-    data['summary'] = summary
+    #data['summary'] = summary
     data['like'] = like
     data['warm'] = warm
     data['sad'] = sad
