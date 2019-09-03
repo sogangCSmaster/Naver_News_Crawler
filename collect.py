@@ -13,7 +13,7 @@ categoryList = [264, 265, 268, 266, 267, 269, 259, 258, 261, 771, 260, 262, 310,
 
 for category in categoryList:
     startDate = 20190601
-    endDate = 20190701
+    endDate = 20190602
     page = 1
     crawledUrl = []
     while True:
@@ -26,7 +26,7 @@ for category in categoryList:
             try:
                 url = urlData['url']
                 if url in crawledUrl:
-                    page = 200
+                    page = 20
                     break
                 else:
                     crawledUrl.append(url)
@@ -60,6 +60,6 @@ for category in categoryList:
                 print(e)
 
         page += 1
-        if page >= 200:
+        if page >= 20:
             startDate += 1
             page = 1
